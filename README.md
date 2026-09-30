@@ -139,7 +139,7 @@ python3 -m unittest discover tests
 │   └── reporter.py                # Multi-format report and evidence generator
 ├── terraform_samples/
 │   ├── non_compliant/             # Intentional misconfigurations (S3, SG, IAM, RDS)
-│   └── compliant/                 # Hardened, auditor-approved infrastructure templates
+│   └── compliant/                 # Sample configurations that pass the implemented checks
 ├── .github/workflows/
 │   └── compliance-gate.yml        # CI/CD pull request gatekeeper workflow
 ├── tests/
