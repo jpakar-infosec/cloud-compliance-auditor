@@ -1,0 +1,271 @@
+================================================================================
+ CLOUDGUARD-GRC: AUTOMATED CLOUD COMPLIANCE & POLICY-AS-CODE ENGINE
+ Beginner GRC Portfolio Project - Overview, Architecture, & Usage Guide
+================================================================================
+
+TABLE OF CONTENTS
+--------------------------------------------------------------------------------
+1. What This Project Does (The Big Picture)
+2. Why This Is Valuable in GRC Cybersecurity
+3. Project Architecture & File Breakdown
+4. Step-by-Step Instructions: How to Run and Use It
+5. Understanding the Reports & Audit Evidence
+6. How the CI/CD "Shift-Left" Gate Works
+7. Resume & Interview Talking Points Cheat Sheet
+
+
+================================================================================
+1. WHAT THIS PROJECT DOES (THE BIG PICTURE)
+================================================================================
+In modern cybersecurity, companies store infrastructure code in files (known as
+Infrastructure-as-Code or Terraform). If an engineer accidentally leaves a
+storage bucket public or opens port 22 (SSH) to the entire internet (0.0.0.0/0),
+the organization faces data breaches and fails compliance audits.
+
+Traditionally, GRC (Governance, Risk, and Compliance) teams perform manual
+audits by interviewing engineers and checking settings months after systems are
+already live.
+
+This project automates the entire process:
+  1. It reads Terraform infrastructure code BEFORE it gets deployed.
+  2. It evaluates that code against 4 major cybersecurity compliance frameworks:
+     - CIS AWS Foundations Benchmark v3.0
+     - NIST Cybersecurity Framework (CSF) 2.0
+     - SOC 2 Type II (Trust Services Criteria)
+     - ISO/IEC 27001:2022
+  3. It generates an Overall Compliance Score (0% to 100%).
+  4. It flags violations by risk severity (CRITICAL, HIGH, MEDIUM, LOW).
+  5. It provides the exact remediation steps so engineers can fix the problem.
+  6. It automatically generates audit evidence (JSON), executive summaries
+     (Markdown), and an interactive dashboard (HTML).
+
+
+================================================================================
+2. WHY THIS IS VALUABLE IN GRC CYBERSECURITY
+================================================================================
+Most beginner GRC candidates only have theoretical knowledge or spreadsheets.
+This project demonstrates:
+  - Technical GRC: You understand code, cloud concepts, and automation.
+  - Policy Engineering: You wrote a formal corporate standard (POLICY_STANDARDS.md)
+    that dictates security rules before enforcing them.
+  - Framework Fluency: You know how a single technical control (e.g. S3 KMS
+    encryption) satisfies multiple frameworks at the same time.
+  - Shift-Left Mindset: You know how to stop non-compliant infrastructure at
+    the Pull Request stage before it ever reaches production.
+
+
+================================================================================
+3. PROJECT ARCHITECTURE & FILE BREAKDOWN
+================================================================================
+The project is organized into logical components:
+
+cloud-compliance-auditor/
+│
+├── auditor.py
+│   The main CLI script you execute from your terminal. It controls the
+│   scanner, sets failure thresholds, filters frameworks, and exports reports.
+│
+├── engine/
+│   ├── parser.py
+│   │   A zero-dependency parser that reads .tf (Terraform) files and
+│   │   extracts resources, attributes, and security blocks.
+│   ├── rules.py
+│   │   The rule library. Defines the 11 security checks, their severity,
+│   │   framework mappings, and specific remediation instructions.
+│   ├── scanner.py
+│   │   The calculation engine that runs rules against parsed resources,
+│   │   computes compliance scores, and aggregates framework percentages.
+│   └── reporter.py
+│       Builds ANSI colored terminal output, Markdown executive reports,
+│       machine-readable JSON audit evidence, and interactive HTML dashboards.
+│
+├── terraform_samples/
+│   ├── non_compliant/
+│   │   Sample Terraform code containing intentional misconfigurations:
+│   │   - s3.tf: Public ACL, unencrypted storage, versioning disabled.
+│   │   - security_groups.tf: SSH (22), RDP (3389), & Postgres (5432) open to 0.0.0.0/0.
+│   │   - iam.tf: Wildcard admin policy ("*") and static user access keys.
+│   │   - rds.tf: Public database endpoint, unencrypted storage, zero backups.
+│   │
+│   └── compliant/
+│       Sample hardened Terraform code showing the "Golden State":
+│       - All resources properly encrypted, private, restricted, and monitored.
+│
+├── .github/workflows/compliance-gate.yml
+│   GitHub Actions CI/CD configuration. Automatically tests pull requests and
+│   blocks merges if HIGH or CRITICAL violations are found.
+│
+├── tests/test_auditor.py
+│   Automated unit tests ensuring the engine and rules work accurately.
+│
+├── POLICY_STANDARDS.md
+│   A formal corporate Cloud Infrastructure Security Standard defining the
+│   rules, roles, responsibilities, and exception process.
+│
+├── FRAMEWORK_MAPPING.md
+│   The GRC Crosswalk Matrix linking technical rules to CIS, NIST, SOC 2, and ISO.
+│
+└── README.md
+    Full repository documentation with diagrams, badges, and quickstart commands.
+
+
+================================================================================
+4. STEP-BY-STEP INSTRUCTIONS: HOW TO RUN AND USE IT
+================================================================================
+
+PREREQUISITES:
+- Python 3.8 or newer (No pip install or external packages needed!).
+- Linux, macOS, or Windows terminal.
+
+First, navigate into the project directory:
+    cd ~/Projects/cloud-compliance-auditor
+
+--------------------------------------------------------------------------------
+COMMAND 1: Scan Vulnerable Infrastructure (Demonstrates Violations)
+--------------------------------------------------------------------------------
+To scan the vulnerable files and generate all report formats:
+
+    python3 auditor.py terraform_samples/non_compliant --format all --fail-on NONE
+
+WHAT HAPPENS:
+- The terminal displays a colorized audit report showing each violation.
+- Displays:
+  * OVERALL COMPLIANCE SCORE (e.g., 38.5% [CRITICAL NON-COMPLIANCE])
+  * Findings breakdown (Critical: 5, High: 3, Medium: 4, Low: 0)
+  * Breakdown per framework (CIS, NIST, SOC 2, ISO 27001)
+  * Individual findings with remediation guidance.
+- Writes 3 output files to the "reports/" directory:
+  * reports/compliance_report.md
+  * reports/compliance_evidence.json
+  * reports/compliance_dashboard.html
+
+--------------------------------------------------------------------------------
+COMMAND 2: Scan Hardened Infrastructure (Post-Remediation Check)
+--------------------------------------------------------------------------------
+To scan the remediated, compliant infrastructure:
+
+    python3 auditor.py terraform_samples/compliant --format all
+
+WHAT HAPPENS:
+- Outputs:
+  "OVERALL COMPLIANCE SCORE: 100.0% [COMPLIANT]"
+  "ZERO COMPLIANCE VIOLATIONS DETECTED. Infrastructure meets all benchmark baselines."
+
+--------------------------------------------------------------------------------
+COMMAND 3: Filter By a Specific Compliance Framework
+--------------------------------------------------------------------------------
+If you are only preparing for a SOC 2 audit or a CIS benchmark review, you can
+isolate that framework:
+
+    # Scan only for SOC 2 controls:
+    python3 auditor.py terraform_samples/non_compliant --framework soc2
+
+    # Scan only for CIS AWS controls:
+    python3 auditor.py terraform_samples/non_compliant --framework cis
+
+    # Scan only for NIST CSF controls:
+    python3 auditor.py terraform_samples/non_compliant --framework nist
+
+--------------------------------------------------------------------------------
+COMMAND 4: Test the CI/CD Security Gate (Exit Codes)
+--------------------------------------------------------------------------------
+In automated pipelines, a program communicates pass/fail through its exit code
+(0 = Success, 1 = Failure):
+
+    python3 auditor.py terraform_samples/non_compliant --fail-on HIGH
+    echo $?
+
+WHAT HAPPENS:
+- Because HIGH and CRITICAL violations are present, the program prints:
+  "[CI/CD GATE FAILED] Found violations matching or exceeding threshold 'HIGH'."
+- It exits with code 1. This is what causes a GitHub Actions build to fail,
+  blocking bad code from being merged.
+
+--------------------------------------------------------------------------------
+COMMAND 5: Run the Automated Unit Test Suite
+--------------------------------------------------------------------------------
+To verify that all scanner logic and rule tests pass:
+
+    python3 -m unittest discover tests
+
+WHAT HAPPENS:
+- Runs all 4 test cases in tests/test_auditor.py.
+- Outputs "OK" in a fraction of a second.
+
+
+================================================================================
+5. UNDERSTANDING THE REPORTS & AUDIT EVIDENCE
+================================================================================
+Whenever you run with `--format all` or `--format [md|json|html]`, the tool
+generates files inside the `reports/` folder:
+
+1. `reports/compliance_report.md` (Executive Markdown Report)
+   - Written for leadership and auditors.
+   - Contains an Executive Summary, Risk Severity Distribution table,
+     Framework Alignment scorecard, and an Auditor Sign-off block.
+   - Can be committed to Git or converted to PDF.
+
+2. `reports/compliance_evidence.json` (Machine-Readable Audit Record)
+   - Formatted for automated compliance tools (like Drata, Vanta, or ServiceNow).
+   - Contains exact timestamps, scan metadata, control IDs, affected resources,
+     and pass/fail counts.
+   - Serves as non-repudiable audit evidence during SOC 2 / ISO certification.
+
+3. `reports/compliance_dashboard.html` (Interactive Web Dashboard)
+   - A modern dark-themed web page.
+   - You can open it in any browser (e.g. `xdg-open reports/compliance_dashboard.html`
+     or double-click it in your file manager).
+   - Great for taking screenshots to include in your LinkedIn posts or portfolio!
+
+
+================================================================================
+6. HOW THE CI/CD "SHIFT-LEFT" GATE WORKS
+================================================================================
+Located at: `.github/workflows/compliance-gate.yml`
+
+Whenever code is pushed or a Pull Request (PR) is opened:
+  Step 1: GitHub automatically starts a fresh Ubuntu container.
+  Step 2: It checks out the new code and sets up Python.
+  Step 3: It runs `test_auditor.py` to ensure tests pass.
+  Step 4: It executes `auditor.py --fail-on HIGH`.
+  Step 5: If any developer added an open port (0.0.0.0/0) or unencrypted S3
+          bucket, the check fails with exit code 1.
+  Step 6: The PR is blocked from merging until the developer fixes the issue.
+  Step 7: The audit report and JSON evidence are uploaded to GitHub Artifacts.
+
+
+================================================================================
+7. RESUME & INTERVIEW TALKING POINTS CHEAT SHEET
+================================================================================
+
+HOW TO LIST IT ON YOUR RESUME:
+--------------------------------------------------------------------------------
+PROJECT: CloudGuard-GRC | Automated Cloud Compliance & Policy-as-Code Engine
+- Engineered an automated compliance audit tool in Python that evaluates
+  Terraform Infrastructure-as-Code against CIS AWS v3.0, NIST CSF 2.0, SOC 2
+  Type II, and ISO/IEC 27001:2022 security baselines.
+- Authored a comprehensive Cloud Security Standard (SEC-STD-CLOUD-004) and
+  multi-framework crosswalk matrix mapping technical controls to audit criteria.
+- Integrated automated compliance gates into CI/CD pipelines (GitHub Actions)
+  to prevent non-compliant cloud resources from deploying into production.
+- Generated standardized JSON evidence records and executive audit reports
+  accelerating audit readiness and eliminating manual evidence collection.
+
+HOW TO EXPLAIN IT IN AN INTERVIEW:
+--------------------------------------------------------------------------------
+Q: "Tell me about a cybersecurity project you worked on."
+A: "I wanted to address one of the biggest challenges in cloud GRC: manual,
+    reactive audits. When companies rely on quarterly spreadsheets, they miss
+    cloud misconfigurations like exposed S3 buckets or unencrypted databases.
+    
+    I built a Policy-as-Code compliance engine that shifts compliance left.
+    First, I wrote an enterprise cloud security standard. Then, I mapped those
+    rules across CIS Benchmarks, NIST CSF 2.0, SOC 2, and ISO 27001. Finally,
+    I built an automated scanner and CI/CD gate that inspects Terraform templates
+    during pull requests. If an engineer introduces a critical violation, the
+    pipeline blocks the merge, provides the exact remediation code, and saves
+    timestamped JSON evidence for our annual auditors."
+
+================================================================================
+END OF GUIDE
+================================================================================
