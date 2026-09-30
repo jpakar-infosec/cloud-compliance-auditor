@@ -1,0 +1,42 @@
+{
+  "metadata": {
+    "tool": "cloud-compliance-auditor",
+    "version": "1.0.0",
+    "scan_timestamp": "2026-09-30T04:53:05.549882+00:00",
+    "target_path": "/home/quietwire/Projects/cloud-compliance-auditor/terraform_samples/compliant",
+    "overall_compliance_score": 100.0,
+    "total_resources": 11,
+    "total_checks": 13,
+    "passed_checks": 13,
+    "failed_checks": 0
+  },
+  "severity_summary": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "MEDIUM": 0,
+    "LOW": 0
+  },
+  "framework_scores": {
+    "CIS_AWS_v3.0": {
+      "compliance_percentage": 100.0,
+      "controls_passed": 13,
+      "controls_total": 13
+    },
+    "NIST_CSF_2.0": {
+      "compliance_percentage": 100.0,
+      "controls_passed": 13,
+      "controls_total": 13
+    },
+    "SOC_2_Type_II": {
+      "compliance_percentage": 100.0,
+      "controls_passed": 13,
+      "controls_total": 13
+    },
+    "ISO_27001_2022": {
+      "compliance_percentage": 100.0,
+      "controls_passed": 13,
+      "controls_total": 13
+    }
+  },
+  "findings": []
+}

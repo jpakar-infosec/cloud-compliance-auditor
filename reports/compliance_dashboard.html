@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cloud Compliance Audit Dashboard</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; padding: 24px; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 20px; margin-bottom: 24px; }
+        h1 { font-size: 24px; margin: 0; color: #38bdf8; }
+        .meta-text { font-size: 13px; color: #94a3b8; }
+        .score-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .card { background: #1e293b; border-radius: 8px; padding: 20px; border: 1px solid #334155; text-align: center; }
+        .card-num { font-size: 32px; font-weight: bold; margin-top: 8px; }
+        .score-card { border-color: #10b981; }
+        .table-section { background: #1e293b; border-radius: 8px; padding: 20px; border: 1px solid #334155; margin-bottom: 24px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 12px; border-bottom: 1px solid #334155; }
+        th { color: #94a3b8; font-weight: 600; font-size: 13px; text-transform: uppercase; }
+        .finding-card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+        .finding-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
+        .finding-title { font-size: 16px; color: #f8fafc; }
+        .finding-meta { font-size: 13px; color: #94a3b8; margin-bottom: 8px; }
+        code { background: #0f172a; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 13px; color: #38bdf8; }
+        .finding-desc { font-size: 14px; margin-bottom: 10px; color: #cbd5e1; }
+        .finding-frameworks { margin-bottom: 10px; }
+        .fw-tag { display: inline-block; background: #334155; padding: 3px 8px; border-radius: 4px; font-size: 11px; margin-right: 6px; margin-bottom: 4px; }
+        .finding-remediation { background: #064e3b; border-left: 4px solid #10b981; padding: 8px 12px; border-radius: 4px; font-size: 13px; color: #a7f3d0; }
+        .no-findings { background: #064e3b; border: 1px solid #10b981; border-radius: 8px; padding: 20px; text-align: center; color: #a7f3d0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Cloud Compliance Audit Dashboard</h1>
+                <div class="meta-text">Target: /home/quietwire/Projects/cloud-compliance-auditor/terraform_samples/compliant | Generated: 2026-09-30 04:53:05Z UTC</div>
+            </div>
+            <div class="meta-text">Engine: Policy-as-Code v1.0.0</div>
+        </header>
+
+        <div class="score-cards">
+            <div class="card score-card">
+                <div class="meta-text">COMPLIANCE SCORE</div>
+                <div class="card-num" style="color: #10b981;">100.0%</div>
+            </div>
+            <div class="card">
+                <div class="meta-text">CRITICAL RISKS</div>
+                <div class="card-num" style="color: #ef4444;">0</div>
+            </div>
+            <div class="card">
+                <div class="meta-text">HIGH RISKS</div>
+                <div class="card-num" style="color: #f97316;">0</div>
+            </div>
+            <div class="card">
+                <div class="meta-text">CHECKS PASSED</div>
+                <div class="card-num" style="color: #10b981;">13 / 13</div>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <h2 style="font-size: 18px; margin-top: 0; color: #38bdf8;">Framework Alignment Breakdown</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Governance Framework</th>
+                        <th>Compliance Rate</th>
+                        <th>Controls Satisfied</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>CIS AWS Foundations Benchmark v3.0</b></td>
+                        <td><b>100.0%</b></td>
+                        <td>13 / 13</td>
+                    </tr>
+                    <tr>
+                        <td><b>NIST Cybersecurity Framework 2.0</b></td>
+                        <td><b>100.0%</b></td>
+                        <td>13 / 13</td>
+                    </tr>
+                    <tr>
+                        <td><b>SOC 2 Type II (Trust Services Criteria)</b></td>
+                        <td><b>100.0%</b></td>
+                        <td>13 / 13</td>
+                    </tr>
+                    <tr>
+                        <td><b>ISO/IEC 27001:2022</b></td>
+                        <td><b>100.0%</b></td>
+                        <td>13 / 13</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 style="font-size: 18px; margin-top: 32px; color: #38bdf8;">Audit Findings & Remediation Roadmap</h2>
+        <div class='no-findings'>✅ <b>Zero compliance violations detected!</b> All configurations satisfy baseline security benchmarks.</div>
+    </div>
+</body>
+</html>

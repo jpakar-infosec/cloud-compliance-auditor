@@ -1,0 +1,40 @@
+name: "Shift-Left GRC Compliance Gate"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  compliance-audit:
+    name: "Audit Infrastructure-as-Code Compliance"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Checkout Code"
+        uses: actions/checkout@v4
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: "Run Unit Tests"
+        run: |
+          python3 -m unittest discover tests
+
+      - name: "Run Policy-as-Code Compliance Audit"
+        run: |
+          # Audit Terraform infrastructure and generate all report formats
+          python3 auditor.py terraform_samples/non_compliant \
+            --format all \
+            --output-dir reports/pr_audit \
+            --fail-on HIGH
+
+      - name: "Upload GRC Audit Evidence & Dashboard"
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: grc-audit-artifacts
+          path: reports/pr_audit/
