@@ -1,0 +1,5 @@
+__pycache__/
+*.py[cod]
+*$py.class
+reports/pr_audit/
+.pytest_cache/
