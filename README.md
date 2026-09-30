@@ -143,16 +143,6 @@ python3 -m unittest discover tests
 
 ---
 
-## 💼 Key Portfolio Highlights & Interview Talking Points
-
-When presenting this project to hiring managers in GRC, Cloud Security, or Cybersecurity Analyst roles:
-
-1. **Governance & Policy Lifecycle:** Authored an enterprise-grade standard ([`POLICY_STANDARDS.md`](POLICY_STANDARDS.md)) establishing explicit technical baselines for engineers before enforcing them.
-2. **Framework Fluency:** Demonstrated deep practical understanding of how specific technical settings (e.g. S3 Public Access Blocks, RDS KMS keys) map directly to audit requirements across CIS, NIST CSF 2.0, SOC 2, and ISO 27001.
-3. **Shift-Left GRC Mindset:** Articulated the cost and time savings of catching compliance defects during code review (via CI/CD gates) rather than during an annual audit scramble.
-4. **Actionable Remediation:** Built findings to include the exact remediation actions and compliant Terraform code blocks rather than generic error codes.
-5. **Auditor-Ready Artifacts:** Created structured JSON evidence packages that can be directly ingested into modern compliance automation platforms (such as Drata or Vanta).
-
 ---
 
 ## 📜 License
