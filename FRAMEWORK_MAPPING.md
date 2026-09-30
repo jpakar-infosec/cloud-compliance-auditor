@@ -1,6 +1,6 @@
 # Governance Framework Crosswalk & Control Mapping Matrix
 
-This document defines the multi-framework crosswalk mapping implemented by the `cloud-compliance-auditor` engine. A single automated technical check simultaneously satisfies control requirements across four primary compliance frameworks.
+This document lists proposed mappings between the project's automated security checks and related framework controls. These mappings require verification against official framework documentation. A technical check may support assessment of a control, but does not independently satisfy its requirements or establish compliance.
 
 ---
 
