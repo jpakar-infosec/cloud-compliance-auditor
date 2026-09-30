@@ -64,7 +64,7 @@ This is an educational prototype. Its parser has known limitations, and its fram
 
 ## 🎯 Framework Alignment & Crosswalk
 
-A single automated rule evaluation simultaneously validates controls across multiple industry standards:
+The table below proposes mappings between individual security checks and related framework controls. These mappings are preliminary and require verification against the cited framework versions. Passing a check does not establish that the associated control is fully satisfied.
 
 | Rule ID | Finding Description | Severity | CIS AWS v3.0 | NIST CSF 2.0 | SOC 2 Type II | ISO 27001:2022 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
