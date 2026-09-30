@@ -13,14 +13,19 @@
 
 ---
 
-## 📌 Executive Problem Statement
+## Project Purpose
 
-In modern cloud environments, **over 80% of security breaches stem from preventable cloud misconfigurations** (e.g., exposed storage buckets, unrestricted administrative ports, and unencrypted databases). 
+Cloud misconfigurations can expose data or allow unintended access. This project explores how automated checks can identify selected risks in Terraform files before deployment.
 
-Traditional GRC approaches rely on periodic, manual audits (spreadsheets, retrospective questionnaires) that take weeks and are outdated the moment they are completed. **CloudGuard-GRC** implements **Continuous Compliance and Policy-as-Code (PaC)**:
-1. **Shifts Compliance Left:** Evaluates Terraform infrastructure code *before* deployment.
-2. **Automates Audit Evidence:** Produces timestamped, machine-readable JSON records satisfying external auditors.
-3. **Enforces Governance:** Blocks non-compliant pull requests in CI/CD pipelines while providing engineers with exact remediation code.
+The project demonstrates:
+1. Checking selected AWS resource configurations against defined security rules.
+2. Generating reports with findings and suggested remediation.
+3. Returning an exit code that a CI/CD workflow can use to flag detected violations.
+
+This is an educational prototype. Its parser has known limitations, and its framework mappings require further review. Reports describe the checks performed; they do not certify compliance.
+
+---
+
 
 ---
 
