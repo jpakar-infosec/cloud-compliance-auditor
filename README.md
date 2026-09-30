@@ -62,7 +62,7 @@ This is an educational prototype. Its parser has known limitations, and its fram
 
 ---
 
-## 🎯 Framework Alignment & Crosswalk
+## Framework Alignment & Crosswalk
 
 The table below proposes mappings between individual security checks and related framework controls. These mappings are preliminary and require verification against the cited framework versions. Passing a check does not establish that the associated control is fully satisfied.
 
@@ -84,7 +84,7 @@ The table below proposes mappings between individual security checks and related
 
 ---
 
-## 🚀 Quickstart & Usage
+## Quickstart & Usage
 
 The auditor is built in pure Python 3 using the standard library. **No pip installs or external cloud accounts are required to run the audit locally.**
 
