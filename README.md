@@ -5,8 +5,11 @@
 [![Security Gate](https://img.shields.io/badge/shift--left-CI%2FCD%20Gate-orange.svg)](#cicd-compliance-gate)
 [![Zero Dependencies](https://img.shields.io/badge/dependencies-zero%20(pure%20python)-brightgreen.svg)](#architecture)
 
-> **A portfolio project demonstrating modern Technical GRC (Governance, Risk, and Compliance) and Shift-Left Security Automation.**  
-> Automatically audits Infrastructure-as-Code (Terraform) against **CIS AWS Foundations v3.0**, **NIST CSF 2.0**, **SOC 2 Type II**, and **ISO/IEC 27001:2022** baselines, generating auditor-ready evidence records and executive dashboards.
+> **A learning project exploring cloud security checks and policy-as-code.**
+>
+> CloudGuard-GRC scans Terraform files for selected AWS security misconfigurations and generates findings in console, Markdown, JSON, and HTML formats. Passing these checks does not establish full compliance with any framework.
+>
+> The initial implementation was generated with Google Antigravity. I am using this project to learn Python, review control mappings, and improve the checks.
 
 ---
 
